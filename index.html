@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Valentine?</title>
+  <style>
+    body{
+      margin:0; min-height:100vh; display:grid; place-items:center;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background: radial-gradient(circle at top, #ffe1ec, #fff);
+      color:#222;
+    }
+    .card{
+      background:#fff; padding:28px; border-radius:18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.08);
+      width:min(520px, 92vw); text-align:center;
+    }
+    h1{ margin:0 0 10px; font-size:28px; }
+    p{ margin:0 0 18px; color:#555; }
+    .btns{ display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+    button{
+      border:0; padding:12px 18px; border-radius:12px; font-size:16px;
+      cursor:pointer; transition: transform .08s ease;
+    }
+    button:active{ transform: scale(.98); }
+    .yes{ background:#ff2e73; color:#fff; }
+    .no{ background:#f1f1f1; color:#222; }
+    .msg{ margin-top:16px; font-size:16px; min-height:24px; }
+    .small{ font-size:13px; color:#777; margin-top:10px; }
+    .hidden{ display:none; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Will you be my Valentine? 💖</h1>
+    <p>Choose honestly… but you know what I’m hoping 😄</p>
+
+    <div class="btns" id="btns">
+      <button class="yes" id="yesBtn">Yes</button>
+      <button class="no" id="noBtn">No</button>
+    </div>
+
+    <div class="msg" id="msg"></div>
+
+    <div class="btns hidden" id="secondChance">
+      <button class="yes" id="fineYes">Okay fine… YES 😄</button>
+      <button class="no" id="stayNo">I’ll stick with No</button>
+    </div>
+
+    <div class="small">Made with 💗 just for you</div>
+  </div>
+
+  <script>
+    const msg = document.getElementById("msg");
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const secondChance = document.getElementById("secondChance");
+    const fineYes = document.getElementById("fineYes");
+    const stayNo = document.getElementById("stayNo");
+
+    const noLines = [
+      "Aww 😄 Are you sure?",
+      "No? My heart is doing buffering… 🥺",
+      "I respect your choice 💛 (but I’ll still hope!)",
+      "Final answer? 😅"
+    ];
+    let noCount = 0;
+
+    function celebrate(){
+      msg.textContent = "YAY!! 💘 See you on Valentine’s! 🥰";
+      secondChance.classList.add("hidden");
+      document.getElementById("btns").classList.add("hidden");
+      // confetti-ish emojis
+      const burst = document.createElement("div");
+      burst.style.fontSize = "28px";
+      burst.style.marginTop = "14px";
+      burst.textContent = "🎉💖🎉💖🎉";
+      document.querySelector(".card").appendChild(burst);
+    }
+
+    yesBtn.addEventListener("click", celebrate);
+
+    noBtn.addEventListener("click", () => {
+      msg.textContent = noLines[Math.min(noCount, noLines.length - 1)];
+      noCount++;
+
+      // Offer a playful second-chance, but keep "No" valid.
+      secondChance.classList.remove("hidden");
+    });
+
+    fineYes.addEventListener("click", celebrate);
+    stayNo.addEventListener("click", () => {
+      msg.textContent = "Okay ❤️ Thanks for being honest. (Still sending you love!)";
+      document.getElementById("btns").classList.add("hidden");
+      secondChance.classList.add("hidden");
+    });
+  </script>
+</body>
+</html>
